@@ -1,0 +1,21 @@
+.navbar{
+    background-color:  rgba(237, 233, 227, 0.95);
+
+}
+#basic-navbar-nav Nav{
+    margin: 1rem;
+}
+.contenidoNavbar{
+    display: flex;
+    justify-content: space-around;
+}
+.navbar-brand{
+    display: flex;
+}
+.navbar-collapse{
+    justify-content: space-around;
+
+}
+.navbar-nav{
+    margin: 0.5rem, 1rem;
+}

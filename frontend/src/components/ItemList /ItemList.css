@@ -1,0 +1,11 @@
+.listGroup{
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    grid-gap: 2.5rem;
+    justify-items: center;
+    align-items: center; 
+    margin-top: 3rem;
+}
+.greeting{
+    text-align: center;
+}

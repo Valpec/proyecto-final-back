@@ -1,0 +1,23 @@
+.navBottom {
+    display: flex;
+    justify-content: center;
+}
+.pagination {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination li {
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-right: 4px;
+}
+
+.pagination li.active {
+    background-color: #ccc;
+    color: #fff;
+}
+

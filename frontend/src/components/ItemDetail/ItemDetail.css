@@ -1,0 +1,44 @@
+.itemDetail{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 3rem 15rem;
+    padding: 3rem 5rem;
+    background-color: #a69790;
+    border-radius: 1rem;
+}
+
+.sideItemDetail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+.nombreItemDetail{
+    text-decoration: none;
+
+}
+
+.catItemDetail{
+    color: #CDC6C3;
+}
+
+.precioItemDetail{
+    text-align: end;
+    padding-right: 2rem;
+}
+
+.itemFooter{
+    justify-self: end;
+    display: flex;
+    justify-content: end;
+}
+
+.terminarCompra{
+    text-decoration: none;
+    color: black;
+    background-color: #D4B2A7;
+}
+
+.terminarCompra:hover{
+    background-color: #e2c8bf;
+}

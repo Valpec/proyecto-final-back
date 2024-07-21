@@ -1,0 +1,23 @@
+.itemCarrito{
+    margin: 2rem 16rem;
+    background-color: #a69790;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.itemCarrito img{
+    max-height: 10rem;
+}
+
+.zonaTexto{
+    flex-direction: column;
+    
+}
+.botonRemove{
+    border: none;
+    background-color: transparent;
+}

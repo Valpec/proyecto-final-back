@@ -1,0 +1,60 @@
+.login-container {
+    width: 25rem;
+    margin: auto;
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-bottom: 5px;
+}
+
+.login-container .input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-container .submit-button,
+.login-container .reset-button {
+    padding: 10px;
+    background-color: #A38F85;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container .submit-button:hover,
+.login-container .reset-button:hover {
+    background-color: #b19b91;
+}
+
+.login-container p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-container a {
+    color: #A38F85;
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
