@@ -1,7 +1,6 @@
 import {jwtDecode} from 'jwt-decode';
 
-// Función para obtener el JWT de las cookies
-const getJwtFromCookies = () => {
+export const getJwtFromCookies = () => {
     const name = 'jwtCookieToken=';
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -26,6 +25,16 @@ export const getCartFromToken = () => {
     return null;
 };
 
-// // Uso de la función
-// export const cartId = getCartFromToken();
-// console.log("Cart ID from JWT:", cartId);
+export const getUserFromToken = () => {
+    const token = getJwtFromCookies();
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+            return decoded.user; 
+        } catch (error) {
+            console.error("Error decoding JWT:", error);
+            return null;
+        }
+    }
+    return null;
+};

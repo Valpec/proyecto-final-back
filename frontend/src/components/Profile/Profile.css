@@ -1,35 +1,26 @@
-nav ul {
-    list-style-type: none;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 10px;
-  }
-  
-  nav ul li a {
-    text-decoration: none;
-    color: blue;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  div {
-    margin: 20px;
-  }
-  
-  button {
-    margin: 10px;
-    padding: 10px;
-    background-color: blue;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: darkblue;
-  }
-  
+.button{
+  margin: 2rem;
+}
+button {
+  padding: 10px;
+  background-color: #A38F85;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 4rem;
+}
+
+button:hover {
+  background-color: #b19b91;
+}
+
+.profileContainer{
+  width: 35rem;
+  margin: auto;
+  margin-top: 3rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

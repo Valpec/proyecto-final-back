@@ -1,0 +1,27 @@
+.adminUsersContainer {
+    padding: 20px;
+  }
+  
+  .adminUsersContainer h2 {
+    margin-bottom: 20px;
+  }
+  
+  .adminUsersContainer button {
+    margin-bottom: 20px;
+  }
+  
+  .adminUsersContainer table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .adminUsersContainer th,
+  .adminUsersContainer td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .adminUsersContainer th {
+    background-color: #f2f2f2;
+  }
+  

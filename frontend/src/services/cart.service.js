@@ -10,16 +10,7 @@ export const getCartById = async (cartId) => {
   const response = await axiosInstance.get(`${API_URL}/${cartId}`);
   return response.data;
 };
-// export const getCartById = async (cartId) => {
-//   try{
-//     const response = await axios.get(`${API_URL}/${cartId}`, {withCredentials:true});
-//     return response.data;
-//   }catch(error){
-//     console.error("Error fetching cart:", error);
-//     return [];
-//   }
-  
-// };
+
 export const addToCart = async (cartId, productId) => {
   const response = await axiosInstance.post(`${API_URL}/${cartId}/product/${productId}`);
   return response.data;

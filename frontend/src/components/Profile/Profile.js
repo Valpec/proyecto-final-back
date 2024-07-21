@@ -1,35 +1,44 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import './Profile.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      navigate('/login'); 
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
 
   if (!user) {
-    return <p>Loading...</p>;
+    return <p>Sesion no encontrada</p>;
   }
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/products">Ver Productos</Link></li>
-          <li><Link to="/realTimeProducts">Administrar Productos</Link></li>
-          <li><Link to={`/carts/${user.cart}`}>Ver carrito *</Link></li>
-          <li><Link to="/profile">Perfil</Link></li>
-        </ul>
-      </nav>
-      <div>
-        <h1>Tu perfil:</h1>
-        <p>{user.name}</p>
-        <p>{user.email}</p>
-        <p>{user.age}</p>
-        <h5>Su rol actual: {user.role}</h5>
-        <p>Desea cambiarlo?</p>
-        <Link to={`/api/users/premium/${user.id}`}><button>Cambiar rol</button></Link>
-        <Link to="/documents"><button>Subir archivos</button></Link>
-        <Link to="/api/sessions/logout"><button>Cerrar sesión</button></Link>
-      </div>
+    <div className='profileContainer'>
+      <h2>Perfil:</h2>
+      <h3>{user.firstName} {user.lastName}</h3>
+      <h4>{user.email}</h4>
+      <p>{user.age}</p>
+
+      <h5>Su rol actual: {user.role}</h5>
+      <p>Desea cambiarlo?</p>
+      <Link to="/*"><button>Cambiar rol</button></Link>
+      <Link to="/*"><button>Subir archivos</button></Link>
+
+      {user.role === 'admin' && (
+        <Link to="/admin-users">
+          <button>Administrar Usuarios</button>
+        </Link>
+      )}
+
+      <button type="submit" onClick={handleLogout}>Cerrar sesión</button>
     </div>
   );
 };

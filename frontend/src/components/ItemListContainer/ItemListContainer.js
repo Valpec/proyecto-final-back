@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ItemList from "../ItemList /ItemList";
-import { useParams } from "react-router-dom";
 import productsService from "../../services/prods.service";
 import Pagination from "../Pagination/Pagination";
+import { AuthContext } from "../../context/AuthContext";
 
 const ItemListContainer = () => {
+    const { isAuthenticated } = useContext(AuthContext);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { categoriaId } = useParams();
     const [pagination, setPagination] = useState({});
+    const navigate = useNavigate();
 
     const fetchProducts = async (categoryId, page) => {
         setLoading(true);
@@ -22,7 +25,7 @@ const ItemListContainer = () => {
                 prevPage: productos.prevPage,
                 totalPages: productos.totalPages,
                 currentPage: productos.page,
-            })
+            });
         } catch (error) {
             console.error("Error fetching products:", error);
             setProducts([]);
@@ -32,8 +35,16 @@ const ItemListContainer = () => {
     };
 
     useEffect(() => {
-        fetchProducts(categoriaId, 1);
-    }, [categoriaId]);
+        if (isAuthenticated) {
+            fetchProducts(categoriaId, 1);
+        } else {
+            navigate('/login');  
+        }
+    }, [categoriaId, isAuthenticated, navigate]);
+
+    if (!isAuthenticated) {
+        return <p>Debe estar logueado para ver este contenido</p>;
+    }
 
     return (
         <>
@@ -47,7 +58,6 @@ const ItemListContainer = () => {
                         totalPages={pagination.totalPages} 
                         onPageChange={page => fetchProducts(categoriaId, page)}
                     />
-                    
                 </div>
             )}
         </>

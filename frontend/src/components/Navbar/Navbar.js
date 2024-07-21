@@ -1,10 +1,12 @@
 import CartWidget from '../CartWidget/CartWidget';
+import Profile from '../Profile/Profile'
  import Container from 'react-bootstrap/Container';
  import Nav from 'react-bootstrap/Nav';
  import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
+import ProfileWidget from '../ProfileWidget/ProfileWidget';
 
 const NavBar = () => {
     return (
@@ -30,6 +32,7 @@ const NavBar = () => {
                 </Nav>
             </Navbar.Collapse>
             <NavLink to='/cart '> <CartWidget /></NavLink>
+            <NavLink to='/profile '> <ProfileWidget /></NavLink>
             
 
         </Container>

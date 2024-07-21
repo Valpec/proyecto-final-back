@@ -14,10 +14,11 @@ export const register = async ({ firstName, lastName, age, email, password }) =>
 };
 
 export const logout = async() => {
-  await axios.get('/api/sessions/logout');
+  await axiosInstance.get('/api/sessions/logout');
   localStorage.removeItem('user');
 };
 
 export const isAuthenticatedBool = async() => {
   return !!Cookies.get('jwtCookieToken'); 
 }
+
