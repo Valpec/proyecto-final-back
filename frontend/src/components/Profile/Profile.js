@@ -28,8 +28,8 @@ const Profile = () => {
       <p>{user.age}</p>
 
       <h5>Su rol actual: {user.role}</h5>
-      <p>Desea cambiarlo?</p>
-      <Link to="/*"><button>Cambiar rol</button></Link>
+
+    
       <Link to="/*"><button>Subir archivos</button></Link>
 
       {user.role === 'admin' && (

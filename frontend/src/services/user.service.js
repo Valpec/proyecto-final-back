@@ -13,7 +13,7 @@ const updateUserRole = async (userId, newRole) => {
 };
 
 const deleteInactiveUsers = async () => {
-  const response = await axios.delete(API_URL);
+  const response = await axiosInstance.delete(API_URL);
   return response.data;
 };
 

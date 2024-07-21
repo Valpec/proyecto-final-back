@@ -172,7 +172,6 @@ export default class UserService {
     findAllUsers = async () => {
         try {
             let users = await userModel.find()
-            console.log('los encontrados', users)
             return users
 
         } catch (error) {
@@ -184,16 +183,12 @@ export default class UserService {
     deleteInactiveUseres = async (users) => {
         try {
 
-            // const twoDaysAgo = new Date();
-            // twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-
-            // const usersToDelete = users.filter(user => {
-            //     return new Date(user.last_connection) > twoDaysAgo;
-            // });
-            const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+            const twoDaysAgo = new Date();
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+            // const thirtyMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
 
             const usersToDelete = users.filter(user => {
-                return new Date(user.last_connection) < thirtyMinutesAgo;
+                return new Date(user.last_connection) < twoDaysAgo && user.role !== 'admin'
             });
             let result = await userModel.deleteMany({ _id: { $in: usersToDelete.map(user => user._id) } })
 

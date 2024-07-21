@@ -18,17 +18,13 @@ export const CartProvider = ({ children }) => {
 
   const fetchCart = async () => {
     if (cartId) {
-      console.log(cartId)
       const cartData = await getCartById(cartId);
-      console.log(cartData)
       setCart(cartData.products);
     }
   };
 
   const addItemToCart = async (productId) => {
-    console.log(cartId, productId)
     const result = await addToCart(cartId, productId);
-    console.log(result)
     fetchCart();
   };
 

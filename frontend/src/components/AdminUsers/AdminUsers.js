@@ -20,7 +20,8 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const data = await getUsers();
-      setUsers(data);
+      const filteredUsers = data.filter(u => u.role !== 'admin');
+      setUsers(filteredUsers);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -63,12 +64,12 @@ const AdminUsers = () => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user._id}>
-              <td>{user.firstName} {user.lastName}</td>
+            <tr key={user.id}>
+              <td>{user.fullName} {user.lastName}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>
-                <button onClick={() => handleChangeRole(user._id, user.role === 'user' ? 'premium' : 'user')}>
+                <button onClick={() => handleChangeRole(user.id, user.role === 'user' ? 'premium' : 'user')}>
                   {user.role === 'user' ? 'Hacer Premium' : 'Hacer Usuario'}
                 </button>
               </td>

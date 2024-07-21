@@ -40,16 +40,15 @@ const postDocumentController = async(req, res)=>{
 const getUsers = async(req, res)=>{
     try{
         const users = await userService.findAllUsers()
-        console.log(users)
 
         const usersModded = users.map(user => {
             return {
+                id: user._id,
                 fullName: user.firstName +' '+user.lastName,
                 email: user.email,
                 role: user.role
             }
         })
-        console.log(usersModded)
         res.status(200).send(usersModded);
     }catch(error){
         res.status(500).send({error: "500", message: `No se pudo obtener la informacion del usuario ${error}`});
@@ -58,12 +57,8 @@ const getUsers = async(req, res)=>{
 
 const deleteUsers = async(req, res)=>{
     try{
-        console.log('1')
         const users  = await userService.findAllUsers()
-        console.log('2')
         const usersDeleted = await userService.deleteInactiveUseres(users)
-        console.log('3')
-        console.log(usersDeleted)
 
         res.status(200).send({message: "Usuarios eliminados existosamente"});
     }catch(error){
