@@ -41,8 +41,7 @@ const Login = () => {
         <input type="submit" value="Iniciar Sesión" className="submit-button" />
       </form>
       <p>¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link></p>
-      <p>¿Tienes una cuenta en Github? <a href="/api/sessions/github">Login por Github</a></p>
-      <a href="/api/email/resetPasswordRequest">
+      <a href="/*">
         <button className="reset-button">Olvidaste tu contraseña?</button>
       </a>
     </div>

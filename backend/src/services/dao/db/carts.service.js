@@ -39,6 +39,7 @@ export default class CartService {
 
     addToCart = async (cartId, prodId, email) => {
         try {
+            console.log(cartId, prodId, email)
             let cartExists = await cartsModel.findById(cartId).populate('products.product')
             if (!cartExists) {
                 throw new Error(`No existe el carrito`)

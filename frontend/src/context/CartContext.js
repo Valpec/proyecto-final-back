@@ -24,6 +24,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const addItemToCart = async (productId) => {
+    console.log('el cart', cartId)
+    
     const result = await addToCart(cartId, productId);
     fetchCart();
   };

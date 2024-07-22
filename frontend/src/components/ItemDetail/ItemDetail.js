@@ -15,7 +15,6 @@ const ItemDetail = ({ _id, category, title, price, thumbnail, stock }) => {
     const item = {
       _id, category, title, price, thumbnail, stock
     };
-    console.log(_id)
     addItemToCart(_id);
 
   };
