@@ -107,7 +107,7 @@ const postSessionController = async (req, res) => {
 const getSessionLogoutController = (req, res) => {
 
     if (req.cookies['jwtCookieToken']) {
-        res.clearCookie('jwtCookieToken').render('logout');
+        res.clearCookie('jwtCookieToken').send({message: 'Logout exitoso'});
     } else {
         res.status(401).send({ error: "No JWT cookie found" });
     }
@@ -115,12 +115,12 @@ const getSessionLogoutController = (req, res) => {
 
 
 const getSessionCurrentController = (req, res) => {
-    const currentUser = new UserDto(req.user)
-    console.log('holaaa')
-    if (currentUser) {
+    if(req.user){
+        console.log(req.user)
+        const currentUser = new UserDto(req.user)
         res.send(currentUser)
     } else {
-        res.send(`No existe currentUser`)
+        res.send(`No existe un usuario logueado actualmente`)
     }
 }
 

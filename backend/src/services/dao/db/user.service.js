@@ -11,7 +11,6 @@ export default class UserService {
 
     changePassword = async (token, password) => {
         try {
-            console.log(token, password)
             let exists = await userModel.findOne({ 'resetPasswordLink.token': token })
             if (!exists) {
                 throw new Error('No existe un usuario con el token indicado')
@@ -22,7 +21,6 @@ export default class UserService {
                 await exists.updateOne({ resetPasswordLink: {} })
                 console.log('expiration time completed');
                 throw new Error('Expiration time completed')
-
             }
 
             const valid = isValidPassword(exists, password)
@@ -35,10 +33,8 @@ export default class UserService {
             let result = await exists.save()
             return result
         } catch (error) {
-            console.error(`Error modificando rol usuario: ${error}`)
-            throw new Error(`Error modificando rol usuario: ${error}`)
-
-
+            console.error(`Error modificando contrasena de usuario: ${error}`)
+            throw new Error(`Error modificando contrasena de usuario: ${error}`)
         }
     }
     changeRoleUser = async (userId) => {
@@ -53,12 +49,11 @@ export default class UserService {
 
                 const existsAllDocs = requiredDocs.every(doc => nombresUploaded.includes(doc))
 
-                console.log(nombresUploaded)
                 if (existsAllDocs) {
                     exists.role = 'premium'
                     console.log('Docs existentes, permisos actualizados')
                 } else {
-                    console.log('No se ha cargado por completo la documentacion requerida')
+                    console.error('No se ha cargado por completo la documentacion requerida')
                     throw new Error('no se cargo por completo la documentacion requerida');
                 }
 
@@ -70,7 +65,7 @@ export default class UserService {
             return result
         } catch (error) {
             console.error(`Error modificando rol usuario: ${error}`)
-
+            throw new Error(`Error modificando rol usuario: ${error}`)
         }
     }
 
@@ -96,6 +91,8 @@ export default class UserService {
             return result
         } catch (error) {
             console.error(`Error creando nuevo usuario: ${error}`)
+            throw new Error(`Error creando nuevo usuario: ${error}`)
+
         }
     }
 
@@ -133,8 +130,7 @@ export default class UserService {
 
         } catch (error) {
             console.error(`Error logueando usuario: ${error}`)
-            result.status(400)
-
+            throw new Error(`Error logueando usuario: ${error}`)
         }
     }
 
@@ -164,6 +160,8 @@ export default class UserService {
 
         } catch (error) {
             console.error(`Error actualizando documentos del usuario: ${error}`);
+            throw new Error(`Error actualizando documentos del usuario: ${error}`)
+
         }
     };
 
@@ -175,7 +173,9 @@ export default class UserService {
             return users
 
         } catch (error) {
-            console.error('Error', error)
+            console.error('Error buscando usuarios', error)
+            throw new Error(`Error buscando usuarios: ${error}`)
+
         }
     }
 
@@ -206,14 +206,14 @@ export default class UserService {
                 } catch (emailError) {
                     console.error(`Error enviando correo a ${user.email}:`, emailError);
                 }
-            
-            }
 
-            console.log(result)
+            }
             return result
 
         } catch (error) {
-            console.error('Error', error)
+            console.error('Error eliminando usuarios inactivos', error)
+            throw new Error(`Error eliminadno usuarios inactivos: ${error}`)
+
         }
     }
 }

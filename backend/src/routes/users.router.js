@@ -17,7 +17,6 @@ router.post('/resetPassword/:token', resetPassword)
 router.post('/:uid/documents',passportCall('jwt'), uploader.fields([
     { name: 'profilePhoto', maxCount: 1 },
     { name: 'productPhotos', maxCount: 10 },
-    // { name: 'documents', maxCount: 3 }
     { name: 'documents_identificacion', maxCount: 1 },
     { name: 'documents_comprobante_domicilio', maxCount: 1 },
     { name: 'documents_comprobante_cuenta', maxCount: 1 }

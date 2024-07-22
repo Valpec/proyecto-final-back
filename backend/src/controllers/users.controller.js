@@ -16,24 +16,22 @@ const resetPassword = async(req, res) => {
     try{
         const token = req.params.token
         const {newPassword} = req.body
-        console.log('entra por aca')
         console.log(token, newPassword)
         let user = await userService.changePassword(token, newPassword)
         res.status(201).send({message: "Rol de usuario actualizado con exito"});
 
     }catch(error){
-        res.status(500).send({error: "500", message: "No se pudo actualizar la informacion del usuario"});
+        res.status(500).send({error: "500", message: `No se pudo obtener la informacion del usuario ${error}`});
     }
 
 }
 
 const postDocumentController = async(req, res)=>{
     try{
-        console.log('entra')
         let user = await userService.uploadFiles(req)
         res.status(200).send({message: "Documentacion cargada exitosamente"});
     }catch(error){
-        res.status(500).send({error: "500", message: "No se pudo actualizar la informacion del usuario"});
+        res.status(500).send({error: "500", message: `No se pudo obtener la informacion del usuario ${error}`});
     }
 }
 
@@ -62,7 +60,7 @@ const deleteUsers = async(req, res)=>{
 
         res.status(200).send({message: "Usuarios eliminados existosamente"});
     }catch(error){
-        res.status(500).send({error: "500", message: "No se pudo actualizar la informacion del usuario"});
+        res.status(500).send({error: "500", message:`No se pudo eliminar los usuarios inactivos.  ${error}`});
     }
 }
 

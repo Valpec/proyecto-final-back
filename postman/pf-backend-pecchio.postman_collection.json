@@ -1,0 +1,835 @@
+{
+	"info": {
+		"_postman_id": "f08f540e-ef96-498b-9943-76b90d831a0a",
+		"name": "pf-backend-pecchio",
+		"description": "<u><b>/api/products</b></u>\n\n- GET - [http://localhost:8080/api/products](http://localhost:8080/api/products)\n    - Obtiene todos los productos existentes\n- GET - [http://localhost:8080/api/products/mockingproducts](http://localhost:8080/api/products/mockingProducts)\n    - Obtiene una lista de 100 productos de mock.\n- GET - [http://localhost:8080/api/products/](http://localhost:8080/api/products/):pid\n    - Obtiene el detalle del producto cuya id es enviado por parametro\n        - El id de prueba: 65efae37086c5e4bb487508e (Vela Copon)\n- POST - [http://localhost:8080/api/products](http://localhost:8080/api/products)\n    - Crea un nuevo producto con informacion enviada por body.\n        - Estructura informacion:\n        - { \"title\": \"ProductoPrueba\", \"description\": \"Prueba\", \"code\": \"prueba\", \"price\": 3500, \"status\": true, \"stock\": 9859, \"category\": \"Velas\", \"thumbnail\": \"vela_copon.jpg\"}\n- PUT - [http://localhost:8080/api/products/](http://localhost:8080/api/products/):pid\n    - Actualiza el producto cuyo id es enviado por parametro, con la informacion enviada por body.\n        - Estructura de informacion: { \"title\": \"ProductoPrueba\", \"description\": \"Prueba\", \"code\": \"prueba\", \"price\": 3800, \"status\": true, \"stock\": 9859, \"category\": \"Velas\", \"thumbnail\": \"vela_copon.jpg\"}\n- DELETE - [http://localhost:8080/api/products/:pid](http://localhost:8080/api/products/:pid)\n    - Elimina el producto cuyo id es enviado por parametro\n\n<u><b>/api/sessions</b></u>\n\n- POST - [http://localhost:8080/api/sessions/register](http://localhost:8080/api/products)\n    - Registra un nuevo usuario con la informacion pasada por body\n        - Estructura de informacion  \n            { \"firstName\": \"asd\", \"lastName\": \"asd\", \"email\": \"[asd@gmail.com](https://mailto:asd@gmail.com)\", \"age\": 20, \"password\": \"asd\"}\n        - **** Al momento de entrega, el usuario 'asd@gmail.com' ya existe en la base de datos, es su carrito autogenerado que es utilizado para las pruebas de los endpoints de carrito, y su id para las pruebas de user.**\n- POST - [http://localhost:8080/api/sessions/login](http://localhost:8080/api/sessions/login)\n    - Registra un inicio de sesion de un usuario existente con la informacion pasada por body.\n        - Estructura de informacion  \n            {\"email\": \"[asd@gmail.com](https://mailto:asd@gmail.com)\", \"password\": \"asd\"}\n        - El request de este esta duplicado, uno es de un usuario de prueba 'asd', y el otro, es del admin, { \"email\": \"[adminCoder@coder.com](https://mailto:adminCoder@coder.com)\", \"password\": \"coder123\"}\n- GET - [http://localhost:8080/api/sessions/logout](http://localhost:8080/api/sessions/login)\n    - Para eliminar el inicio de sesion del usuario actual\n- GET - [http://localhost:8080/api/sessions/current](http://localhost:8080/api/sessions/login)\n    - Obtiene los datos del usuario logueado actualmente.\n\n<u><b>/api/users</b></u>\n\n- PUT - [http://localhost:8080/api/users/premium/:uid](http://localhost:8080/api/users/premium/:uid)\n    - Cambia el rol del usuario cuyo id es enviado por parametro. Un usuario al ser registrado, lo hace con rol 'user'. Solo puede ser cambiado una vez cargada la documentacion solicitada. Puede hacerlo un mismo usuario o el admin al cambio de rol.\n        - El id utilizado es el del usuario 'asd@gmail.com': 669d82ceb41b5ef7984403f2\n- GET - [http://localhost:8080/api/users](http://localhost:8080/api/users)\n    - Obtiene la informacion de todos los usuarios existentes. Solo tiene acceso el administrador.\n- DELETE - [http://localhost:8080/api/users](http://localhost:8080/api/users)\n    - Elimina los usuarios inactivos por dos dias o mas. Solo tiene acceso el administrador\n- POST - [http://localhost:8080/api/users/:uid/documents](http://localhost:8080/api/users/:uid/documents)\n    - Carga al usuario de id indicado por parametro, documentos\n        - El id de usuario utilizado de ejemplo: 665c920b84d198d29e260d9a\n- POST - [http://localhost:8080/api/users/resetPassword/:token](http://localhost:8080/api/users/resetPassword/:token)\n    - Para cambiar la contrasena del usuario. El token es generado por [http://localhost:8080/api/email/resetPasswordRequest,](http://localhost:8080/api/email/resetPasswordRequest,) y es enviado por correo.\n        - Recibe un token de duracion limitado por parametro, y por body, la nueva contrasena: { \"newPassword\" : \"nueva\"}\n\n<u><b>/api/carts<br></b></u>**** El id de carrito utilizado para las pruebas es el del usuario 'asd@gmail.com',** 669d82d3b41b5ef7984403f5\n\n- GET - [http://localhost:8080/api/carts/:cid](http://localhost:8080/api/carts/:cid)\n    - Obtiene todos los productos del carrito cuyo id es recibido por parametro\n        - El cart utilziado para las pruebas es : 669d82d3b41b5ef7984403f5\n- GET - [http://localhost:8080/api/carts/:cid/purchase](http://localhost:8080/api/carts/:cid/purchase)\n    - Realiza la compra de los productos con stock en el carrito cuyo id es enviado por parametro. Envia un correo de confirmacion al usuario dueno del carrito\n- POST - [http://localhost:8080/api/carts/](http://localhost:8080/api/carts/)\n    - Crea un carrito vacio sin asociarlo a ningun usuario.\n- POST - [http://localhost:8080/api/carts/:cid/product/:pid](http://localhost:8080/api/carts/:cid/product/:pid)\n    - Agrega un producto de id enviado por parametro, al carrito de id tambien indicado por parametro. Agrega de a uno por vez. Si el producto ya existe en el carrito, aumenta su cantidad en uno .\n        - El id del carrito utilizado para las pruebas, es el mismo que el mencionado anteriormente,\n        - En las pruebas, existen dos requests, uno con id de un producto con stock: 65efae37086c5e4bb487508e (vela copon), y uno sin stock: 65efae52086c5e4bb4875092 (vela bir).\n            - Esto es para poder probar que la compra no incluye los productos que no tienen stock.\n- DELETE - [http://localhost:8080/api/carts/:cid](http://localhost:8080/api/carts/:cid)\n    - Elimina el carrito indicado por parametro.\n- DELETE - [http://localhost:8080/api/carts/:cid/product/:pid](http://localhost:8080/api/carts/:cid/product/:pid)\n    - Elimina el producto indicado por parametro del carrito\n- PUT - [http://localhost:8080/api/carts/:cid](http://localhost:8080/api/carts/:cid)\n    - Actualiza los productos con formato de paginacion\n- PUT - [http://localhost:8080/api/carts/:cid/product/:pid](http://localhost:8080/api/carts/:cid/product/:pid)\n    - Actualiza la cantidad del producot indicado por parametro.\n        - Recibe la cantidad por body, con el formato: {\"qty\": 5}\n\n<u><b>/api/sms</b></u>\n\n- GET - [http://localhost:8080/api/sms/](http://localhost:8080/api/sms/)\n    - Envia un sms.\n\n<u><b>/api/email</b></u>\n\n- GET - [http://localhost:8080/api/email/](http://localhost:8080/api/email/)\n    - Envia un correo de prueba\n- GET - [http://localhost:8080/api/email/attachments](http://localhost:8080/api/email/attachments)\n    - Envia un correo de prueba con archivos adjuntos.\n- POST - [http://localhost:8080/api/email/](http://localhost:8080/api/email/)resetPasswordRequest\n    \n    - Envia un correo para solicitar un cambio de contrasena a un correo enviado por body\n        \n        - Recibe por body, el email con formato: {\"email\": \"email@email.com\"}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32870546"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Listar todos los productos de la bd (paginacion)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar mocking products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/mockingproducts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"mockingproducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener unico producto por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/:pid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "pid",
+									"value": "65efae37086c5e4bb487508e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear nuevo producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"ProductoPrueba\",\n    \"description\": \"Prueba\",\n    \"code\": \"prueba\",\n    \"price\": 3500,\n    \"status\": true,\n    \"stock\": 9859,\n    \"category\": \"Velas\",\n    \"thumbnail\": \"vela_copon.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar producto por id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"ProductoPrueba\",\n    \"description\": \"Prueba\",\n    \"code\": \"prueba\",\n    \"price\": 3800,\n    \"status\": true,\n    \"stock\": 9859,\n    \"category\": \"Velas\",\n    \"thumbnail\": \"vela_copon.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/products/669986c87b2cefb1864f8bf7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"669986c87b2cefb1864f8bf7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar producto por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/products/669986c87b2cefb1864f8bf7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"669986c87b2cefb1864f8bf7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "Registrar nuevo usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"asd\",\n    \"lastName\": \"asd\",\n    \"email\": \"asd@gmail.com\",\n    \"age\": 20, \n    \"password\": \"asd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"asd@gmail.com\",\n    \"password\": \"asd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login de admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"adminCoder@coder.com\",\n    \"password\": \"coder123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario de sesion actual",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/current",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Cambiar rol de usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/premium/665c920b84d198d29e260d9a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"premium",
+								"665c920b84d198d29e260d9a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuarios inactivos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar documentos usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profilePhoto",
+									"type": "file",
+									"src": "/Users/vale/Desktop/Captura de pantalla 2024-07-20 a la(s) 2.09.26 a. m..png"
+								},
+								{
+									"key": "productPhotos",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "documents_identificacion",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "documents_comprobante_domicilio",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "documents_comprobante_cuenta",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/:uid/documents",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								":uid",
+								"documents"
+							],
+							"variable": [
+								{
+									"key": "uid",
+									"value": "665c920b84d198d29e260d9a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar contrasena",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"nueva\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/resetPassword/:token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"resetPassword",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Listar productos del carrito",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar compra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid/purchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"purchase"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear carrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								""
+							]
+						},
+						"description": "Crea un carrito vacio, no es asociado a ningun usuario ni tiene productos dentro."
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar producto por id al carrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid/product/:pid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"product",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								},
+								{
+									"key": "pid",
+									"value": "65efae37086c5e4bb487508e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina todos los productos del carrito",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina el producto seleccionado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid/product/:pid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"product",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								},
+								{
+									"key": "pid",
+									"value": "65efae37086c5e4bb487508e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualiza el carrito con arreglo de prods con formato de paginacion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualiza la cant de ejemplares del producto por una pasada por el body",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid/product/:pid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"product",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669d82d3b41b5ef7984403f5"
+								},
+								{
+									"key": "pid",
+									"value": "65efae37086c5e4bb487508e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Prueba-Agregar producto SIN STOCK (para pruchase)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/:cid/product/:pid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								":cid",
+								"product",
+								":pid"
+							],
+							"variable": [
+								{
+									"key": "cid",
+									"value": "669c9054db6987d46ef5bf3b"
+								},
+								{
+									"key": "pid",
+									"value": "65efae52086c5e4bb4875092"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sms",
+			"item": [
+				{
+					"name": "Enviar sms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/sms/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sms",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Email",
+			"item": [
+				{
+					"name": "Enviar un correo de prueba",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/email/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar correo de prueba con archivos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/email/attachments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"email",
+								"attachments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar cambio de contrasena",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"email@email.com\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/email/resetPasswordRequest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"email",
+								"resetPasswordRequest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

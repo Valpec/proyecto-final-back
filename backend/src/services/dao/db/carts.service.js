@@ -11,6 +11,7 @@ export default class CartService {
             return carts.map(cart => cart.toObject())
         }catch(error){
             console.error(`Error leyendo el carrito: ${error}`)
+            throw new Error(`Error leyendo el carrito: ${error}`)
         }
     }
 
@@ -21,6 +22,8 @@ export default class CartService {
             return result
         }catch(error){
             console.error(`Error creando el carrito: ${error}`)
+            throw new Error(`Error creando el carrito: ${error}`)
+
         }
     }
 
@@ -30,7 +33,7 @@ export default class CartService {
             return result
         }catch(error){
             console.error(`Error leyendo los productos del carrito: ${error}`)
-            
+            throw new Error(`Error leyendo los productos del carrito: ${error}`)
         }
     }
 
@@ -61,6 +64,7 @@ export default class CartService {
             return result
         } catch (error) {
             console.error(`Error agregando al carrito: ${error}`)
+            throw new Error(`Error agregando el carrito: ${error}`)
         }
 
     };
@@ -75,6 +79,8 @@ export default class CartService {
             return result
         } catch (error) {
             console.error(`Error eliminando el carrito: ${error}`)
+            throw new Error(`Error eliminando el carrito: ${error}`)
+
         }
     }
 
@@ -84,7 +90,6 @@ export default class CartService {
             if (!cartExists) {
                 throw new Error(`No existe el carrito`)
             }
-
             let prodExists = cartExists.products.find(
                 prod => prod.product._id == prodId)
             if (!prodExists) {
@@ -96,7 +101,9 @@ export default class CartService {
                 { $pull: { products: { product: prodId } } })
             return result
         } catch (error) {
-            console.error(`Error eliminando del carrito: ${error}`)
+            console.error(`Error eliminando productos del carrito: ${error}`)
+            throw new Error(`Error eliminando productos  del carrito: ${error}`)
+
         }
 
     }
@@ -122,6 +129,8 @@ export default class CartService {
             return result
         } catch (error) {
             console.error(`Error actualizando el carrito: ${error}`)
+            throw new Error(`Error actualizando el carrito: ${error}`)
+
         }
     }
 
@@ -137,6 +146,8 @@ export default class CartService {
             return result
         } catch (error){
             console.error(`Error actualizando el carrito: ${error}`)
+            throw new Error(`Error actualizando el carrito: ${error}`)
+
         }
     }
 }

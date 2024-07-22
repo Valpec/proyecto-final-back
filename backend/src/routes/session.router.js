@@ -4,14 +4,11 @@ import passport from "passport";
 import { getSessionGithubController, postSessionController, getSessionCurrentController, getSessionLogoutController} from '../controllers/session.controller.js'
 
 import { passportCall, generateJWToken} from '../utils.js'
-import errorHandler from '../services/errors/middlewares/errorHandler.js';
 
 const router = Router()
 
-
 router.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
 })
-
 
 router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/github/error' }), getSessionGithubController)
 
@@ -19,14 +16,11 @@ router.post('/register', passport.authenticate('register', { failureRedirect: '/
     res.status(201).send({ stauts: 'success', message: "User creado exitosamente" })
 })
 
-
 router.post("/login", postSessionController );
-
 
 router.get("/logout", getSessionLogoutController);
 
 router.get("/current", passportCall('jwt'), getSessionCurrentController);
-
 
 router.get("/fail-register", (req, res) => {
     res.status(401).send({ error: "Error procesando el registro" });
@@ -35,7 +29,6 @@ router.get("/fail-register", (req, res) => {
 router.get("/fail-login", (req, res) => {
     res.status(401).send({ error: "Error procesando el login" });
 });
-// router.use(errorHandler);
 
 export default router;
 
